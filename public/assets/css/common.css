@@ -47,7 +47,7 @@ h1{font-size:22px;margin:0;font-weight:900;letter-spacing:.2px}
   box-shadow:var(--shadow1);
 }
 
-/* 共通：トップ/固定ページ用の簡易グリッド（ホームで使う） */
+/* 固定ページ/トップ用 */
 .section{margin-top:16px}
 .sectionTitle{margin:0 0 10px;font-size:16px;font-weight:900}
 
@@ -113,23 +113,7 @@ button:focus-visible{
 }
 .toast.show{opacity:1}
 
-/* 共通フッター導線（AdSense審査でも効く） */
-.siteFooter{
-  margin:18px 0 6px;
-  padding-top:12px;
-  border-top:1px solid var(--bd);
-  color:var(--mut);
-  font-size:12px;
-  display:flex;
-  justify-content:center;
-  gap:8px;
-  flex-wrap:wrap;
-}
-.siteFooter a{color:var(--mut)}
-.siteFooter a:hover{color:var(--tx)}
-.siteFooter .sep{opacity:.6}
-
-/* ===== site.css由来（固定ページ用） ===== */
+/* 固定ページのチップナビ（site.css由来） */
 .topnav{
   display:flex;
   gap:10px;
@@ -150,12 +134,30 @@ button:focus-visible{
   text-decoration:none;
 }
 
+/* 区切り（siteFooter / footer どっちでも使える） */
+.sep{opacity:.6;margin:0 6px}
+
+/* フッター導線（推奨：siteFooter） */
+.siteFooter{
+  margin:18px 0 6px;
+  padding-top:12px;
+  border-top:1px solid var(--bd);
+  color:var(--mut);
+  font-size:12px;
+  display:flex;
+  justify-content:center;
+  gap:8px;
+  flex-wrap:wrap;
+}
+
+/* 旧 .footer（既存ページ互換のため残す） */
 .footer{
   margin:20px 0 6px;
   text-align:center;
   color:var(--mut);
   font-size:12px;
 }
-.footer a{color:var(--mut)}
-.footer a:hover{color:var(--tx)}
-.sep{opacity:.6;margin:0 6px}
+
+/* フッター内リンクは共通化 */
+.siteFooter a, .footer a{color:var(--mut)}
+.siteFooter a:hover, .footer a:hover{color:var(--tx)}
