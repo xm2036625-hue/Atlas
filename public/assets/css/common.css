@@ -37,6 +37,7 @@ header{
   margin: 6px 0 14px;
 }
 h1{font-size:22px;margin:0;font-weight:900;letter-spacing:.2px}
+.sub{color:var(--mut);font-size:13px;margin:6px 0 0;line-height:1.6}
 
 .card{
   background:var(--card);
@@ -46,6 +47,45 @@ h1{font-size:22px;margin:0;font-weight:900;letter-spacing:.2px}
   box-shadow:var(--shadow1);
 }
 
+/* 共通：トップ/固定ページ用の簡易グリッド（ホームで使う） */
+.section{margin-top:16px}
+.sectionTitle{margin:0 0 10px;font-size:16px;font-weight:900}
+
+.grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:12px;
+}
+@media (max-width:720px){ .grid{grid-template-columns:1fr} }
+
+.toolCard{
+  display:block;
+  border:1px solid var(--bd);
+  border-radius:14px;
+  background:#fff;
+  padding:12px;
+  box-shadow:0 1px 0 rgba(60,64,67,.06);
+  text-decoration:none;
+  color:inherit;
+}
+.toolCard:hover{background:#fbfbfb;border-color:#c6c9cc;text-decoration:none}
+
+.toolTop{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:6px}
+.toolTitle{font-size:15px;font-weight:900}
+.toolDesc{margin:0;color:var(--mut);font-size:13px;line-height:1.7}
+
+.badge{
+  font-size:12px;
+  font-weight:900;
+  color:#0b57d0;
+  background:rgba(26,115,232,.10);
+  border:1px solid rgba(26,115,232,.25);
+  padding:6px 10px;
+  border-radius:999px;
+  white-space:nowrap;
+}
+
+/* 共通ボタン */
 button{
   border:1px solid var(--bd);
   background:#fff;
@@ -64,6 +104,7 @@ button:focus-visible{
   box-shadow:0 0 0 3px rgba(26,115,232,.22);
 }
 
+/* 共通トースト */
 .toast{
   position:fixed;left:50%;bottom:18px;transform:translateX(-50%);
   background:#202124;color:#fff;padding:10px 12px;border-radius:12px;
@@ -72,6 +113,7 @@ button:focus-visible{
 }
 .toast.show{opacity:1}
 
+/* 共通フッター導線（AdSense審査でも効く） */
 .siteFooter{
   margin:18px 0 6px;
   padding-top:12px;
@@ -86,3 +128,34 @@ button:focus-visible{
 .siteFooter a{color:var(--mut)}
 .siteFooter a:hover{color:var(--tx)}
 .siteFooter .sep{opacity:.6}
+
+/* ===== site.css由来（固定ページ用） ===== */
+.topnav{
+  display:flex;
+  gap:10px;
+  flex-wrap:wrap;
+  margin-top:10px;
+  justify-content:center;
+}
+.topnav a{
+  font-size:13px;
+  border:1px solid var(--bd);
+  background:#fff;
+  padding:8px 12px;
+  border-radius:999px;
+  font-weight:900;
+}
+.topnav a:hover{
+  background:var(--soft);
+  text-decoration:none;
+}
+
+.footer{
+  margin:20px 0 6px;
+  text-align:center;
+  color:var(--mut);
+  font-size:12px;
+}
+.footer a{color:var(--mut)}
+.footer a:hover{color:var(--tx)}
+.sep{opacity:.6;margin:0 6px}
