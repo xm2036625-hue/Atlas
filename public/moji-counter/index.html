@@ -1,0 +1,245 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>文字数カウンター（改行除外・空白除外・UTF-8）｜無料で即カウント</title>
+  <meta name="description" content="文字数（見た目）・文字数（改行除外）・文字数（改行/空白除外）・行数・UTF-8バイト数を即時にカウント。履歴5件を端末内に保存。無料・登録不要。" />
+  <meta name="robots" content="index,follow" />
+  <meta name="theme-color" content="#ffffff" />
+
+  <!-- canonical / OGP（公開後に実URLへ差し替え推奨） -->
+  <link rel="canonical" href="https://YOUR_DOMAIN/moji-counter/" />
+  <meta property="og:url" content="https://YOUR_DOMAIN/moji-counter/" />
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="文字数カウンター（改行除外・空白除外・UTF-8）｜無料で即カウント" />
+  <meta property="og:description" content="文字数（見た目）・改行除外・改行/空白除外・行数・UTF-8バイト数を即時にカウント。履歴5件を端末内に保存。無料・登録不要。" />
+  <meta property="og:image" content="/assets/img/ogp-default.png" />
+  <meta name="twitter:card" content="summary" />
+
+  <link rel="stylesheet" href="/assets/css/common.css" />
+  <link rel="stylesheet" href="/assets/css/tool.css" />
+
+  <!-- ✅ FAQ 構造化データ（ページ下部のFAQと一致：フル版） -->
+  <script type="application/ld+json">
+  {
+    "@context":"https://schema.org",
+    "@type":"FAQPage",
+    "mainEntity":[
+      {
+        "@type":"Question",
+        "name":"「文字数」とは何ですか？",
+        "acceptedAnswer":{"@type":"Answer","text":"人が見たときの“1文字”に近い数え方です。絵文字や結合文字なども1文字として扱えるようにカウントします（環境により近い値で代替する場合があります）。"}
+      },
+      {
+        "@type":"Question",
+        "name":"「改行除外」は何を除外しますか？",
+        "acceptedAnswer":{"@type":"Answer","text":"改行（LF）だけを除外して、残りを見た目の文字数でカウントします。文章の見た目は維持しつつ、行区切りを文字数に含めたくない場合に使えます。"}
+      },
+      {
+        "@type":"Question",
+        "name":"「改行・空白除外」は何を除外しますか？",
+        "acceptedAnswer":{"@type":"Answer","text":"改行に加えて、半角スペース・全角スペース・タブを除外してカウントします。空白を除いた“中身の文字量”を見たい場合に向きます。"}
+      },
+      {
+        "@type":"Question",
+        "name":"行数はどう数えていますか？",
+        "acceptedAnswer":{"@type":"Answer","text":"改行で区切って行数を数えます。空の入力は0行、1行の文章は1行として扱います。"}
+      },
+      {
+        "@type":"Question",
+        "name":"UTF-8バイト数は何に使いますか？",
+        "acceptedAnswer":{"@type":"Answer","text":"フォーム上限やAPI制限など“バイト数”で制限される場面で使います。UTF-8では英数字は1バイト、全角文字は概ね3バイトになることが多いです。"}
+      },
+      {
+        "@type":"Question",
+        "name":"WordやGoogleドキュメントの文字数と違うことがありますか？",
+        "acceptedAnswer":{"@type":"Answer","text":"あります。改行や空白の扱い、絵文字・結合文字の数え方などがツールによって異なるためです。用途に合わせて数え方を選んでください。"}
+      },
+      {
+        "@type":"Question",
+        "name":"絵文字は1文字として数えられますか？",
+        "acceptedAnswer":{"@type":"Answer","text":"対応ブラウザでは見た目の1文字として数えます。未対応環境では近い値になります。"}
+      },
+      {
+        "@type":"Question",
+        "name":"「改行を統一（CRLF→LF）」のチェックは何のためですか？",
+        "acceptedAnswer":{"@type":"Answer","text":"Windows由来のCRLFなど、改行の種類を統一してカウントのブレを防ぐためです。基本はオン推奨です。"}
+      },
+      {
+        "@type":"Question",
+        "name":"入力した文章はサーバーに送られますか？",
+        "acceptedAnswer":{"@type":"Answer","text":"いいえ。このページはブラウザ内で計算し、入力内容をサーバー送信しません（履歴は端末内の保存領域にのみ保存されます）。"}
+      },
+      {
+        "@type":"Question",
+        "name":"履歴はどこに保存されますか？",
+        "acceptedAnswer":{"@type":"Answer","text":"この端末のブラウザ内（localStorage）に最大5件保存します。他の端末やブラウザとは共有されません。"}
+      },
+      {
+        "@type":"Question",
+        "name":"アクセス解析や広告を入れると入力内容は取得されますか？",
+        "acceptedAnswer":{"@type":"Answer","text":"入力欄の文章は送信しません。解析/広告は閲覧情報（ページ表示など）を取得する場合があります。"}
+      },
+      {
+        "@type":"Question",
+        "name":"履歴を消したい場合はどうすればいいですか？",
+        "acceptedAnswer":{"@type":"Answer","text":"「履歴クリア」で端末内の履歴を削除できます。"}
+      }
+    ]
+  }
+  </script>
+
+  <script src="/assets/js/common.js" defer></script>
+  <script src="/assets/js/tools/moji-counter.js" defer></script>
+</head>
+
+<body>
+  <div class="wrap">
+    <header>
+      <h1>文字数カウンター</h1>
+    </header>
+
+    <section class="card">
+      <div class="counterWrap" aria-label="counts">
+        <div class="bigCard">
+          <div class="bigLabel">文字数</div>
+          <div class="bigValue" id="cGrapheme">0</div>
+        </div>
+
+        <div class="rows" aria-label="row1">
+          <div class="row"><div class="k">改行除外</div><div class="v" id="cNoNL">0</div></div>
+          <div class="row"><div class="k">改行・空白除外</div><div class="v" id="cNoNLNoSpace">0</div></div>
+        </div>
+
+        <div class="rows" aria-label="row2">
+          <div class="row"><div class="k">行数</div><div class="v" id="cLines">0</div></div>
+          <div class="row"><div class="k">UTF-8 バイト数</div><div class="v" id="cBytes">0</div></div>
+        </div>
+      </div>
+
+      <div class="privacyNotice" role="note" aria-label="privacy note">
+        <strong>ブラウザ内でカウントを行うため、入力内容はサーバー送信しません。</strong><br>
+        ※履歴はこの端末のブラウザ内にのみ保存されます。
+      </div>
+
+      <div class="opts">
+        <label><input id="optNormalizeNL" type="checkbox" checked> 改行を統一（CRLF→LF）して数える</label>
+      </div>
+
+      <textarea id="text" placeholder="ここに文章を入力 / 貼り付け"></textarea>
+
+      <div class="btnbar">
+        <button id="btnClear" type="button">クリア</button>
+        <button id="btnSave" type="button">履歴に保存</button>
+      </div>
+
+      <div class="history">
+        <div class="historyHead">
+          <p class="historyTitle">履歴（直近5件・この端末のブラウザにのみ保存）</p>
+          <button id="btnHistoryClear" class="mini" type="button">履歴クリア</button>
+        </div>
+        <ul id="historyList" class="historyList"></ul>
+      </div>
+
+      <div class="hint">
+        ・「改行・空白除外」は、改行 + 半角/全角スペース + タブを除外。<br/>
+        ・計測は Cloudflare Web Analytics（任意、トークン設定時のみ本番で読み込み）。
+      </div>
+
+      <div class="seo" id="howto">
+        <nav class="toplinks" aria-label="page links">
+          <a href="#howto">使い方</a>
+          <a href="#meaning">カウントの仕方</a>
+          <a href="#faq">FAQ</a>
+        </nav>
+
+        <h2>使い方</h2>
+        <ul>
+          <li>文章を入力欄に貼り付けると、上のカウンターが自動で更新されます。</li>
+          <li>改行を含む文章は、必要に応じて「改行を統一」をオンにするとブレが減ります。</li>
+          <li>よく使う文章は「履歴に保存」で端末内に最大5件保存できます。</li>
+        </ul>
+
+        <h2 id="meaning">カウントの仕方（用途別の選び方）</h2>
+
+        <h3>文字数</h3>
+        <p>人が見たときの「1文字」に近いカウントです。SNS投稿や文章の見た目の長さを揃えたい用途に向きます。</p>
+
+        <h3>改行除外</h3>
+        <p>改行だけを除外してカウントします。複数行の文章でも、改行を文字数に入れたくないときに便利です。</p>
+
+        <h3>改行・空白除外</h3>
+        <p>改行に加えて、半角/全角スペースとタブを除外します。空白を取り除いた「中身の文字量」を見たいときに使います。</p>
+
+        <h3>行数</h3>
+        <p>改行で区切って行数を数えます。フォーム入力や原稿チェックで「何行か」を確認したいときに使います。</p>
+
+        <h3>UTF-8 バイト数</h3>
+        <p>バイト制限（API・DB・フォーム上限など）がある場合に使います。英数字は1バイト、全角文字は概ね3バイトになることが多いです。</p>
+
+        <h2 id="faq">よくある質問（FAQ）</h2>
+        <div class="faq" aria-label="faq">
+          <details>
+            <summary>「文字数」とは何ですか？</summary>
+            <div class="a">人が見たときの“1文字”に近い数え方です。絵文字や結合文字なども1文字として扱えるようにカウントします。<br><span>※環境により近い値で代替する場合があります。</span></div>
+          </details>
+          <details>
+            <summary>「改行除外」は何を除外しますか？</summary>
+            <div class="a">改行（LF）だけを除外して、残りを見た目の文字数でカウントします。</div>
+          </details>
+          <details>
+            <summary>「改行・空白除外」は何を除外しますか？</summary>
+            <div class="a">改行に加えて、半角スペース・全角スペース・タブを除外してカウントします。</div>
+          </details>
+          <details>
+            <summary>行数はどう数えていますか？</summary>
+            <div class="a">改行で区切って行数を数えます。空の入力は0行、1行の文章は1行として扱います。</div>
+          </details>
+          <details>
+            <summary>UTF-8バイト数は何に使いますか？</summary>
+            <div class="a">フォーム上限やAPI制限など“バイト数”で制限される場面で使います。UTF-8では英数字は1バイト、全角文字は概ね3バイトになることが多いです。</div>
+          </details>
+          <details>
+            <summary>WordやGoogleドキュメントの文字数と違うことがありますか？</summary>
+            <div class="a">あります。改行や空白の扱い、絵文字・結合文字の数え方などがツールによって異なるためです。用途に合わせて数え方を選んでください。</div>
+          </details>
+          <details>
+            <summary>絵文字は1文字として数えられますか？</summary>
+            <div class="a">対応ブラウザでは見た目の1文字として数えます。未対応環境では近い値になります。</div>
+          </details>
+          <details>
+            <summary>「改行を統一（CRLF→LF）」は何のためですか？</summary>
+            <div class="a">Windows由来のCRLFなど、改行の種類を統一してカウントのブレを防ぐためです。基本はオン推奨です。</div>
+          </details>
+          <details>
+            <summary>入力した文章はサーバーに送られますか？</summary>
+            <div class="a">いいえ。このページはブラウザ内で計算し、入力内容をサーバー送信しません（履歴は端末内の保存領域にのみ保存されます）。</div>
+          </details>
+          <details>
+            <summary>履歴はどこに保存されますか？</summary>
+            <div class="a">この端末のブラウザ内（localStorage）に最大5件保存します。他の端末やブラウザとは共有されません。</div>
+          </details>
+          <details>
+            <summary>アクセス解析や広告を入れると入力内容は取得されますか？</summary>
+            <div class="a">入力欄の文章は送信しません。解析/広告は閲覧情報（ページ表示など）を取得する場合があります。</div>
+          </details>
+          <details>
+            <summary>履歴を消したい場合はどうすればいいですか？</summary>
+            <div class="a">「履歴クリア」で端末内の履歴を削除できます。</div>
+          </details>
+        </div>
+
+        <h2>運営者・連絡先</h2>
+        <p>連絡：<a href="mailto:xm2036625@gmail.com">xm2036625@gmail.com</a></p>
+
+        <h2>プライバシー</h2>
+        <p>本サイトは入力内容をサーバーに送信しません。履歴は端末内に保存されます。アクセス解析/広告を導入している場合、閲覧情報が収集されることがありますが、入力欄の文章は送信しません。</p>
+        <p class="note">※公開後は canonical / og:url を実URLに更新してください。</p>
+      </div>
+    </section>
+  </div>
+
+  <div class="toast" id="toast">保存しました</div>
+</body>
+</html>
